@@ -2,16 +2,21 @@
   "name": "react-move-hook",
   "version": "0.0.1",
   "description": "A React hook to make elements movable.",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/types",
   "scripts": {
     "test": "jest",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prebuild": "rimraf ./lib",
+    "build": "rollup -c rollup.config.js"
   },
   "author": "David Ammeraal",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.13.8",
+    "@rollup/plugin-typescript": "^8.2.0",
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-essentials": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
@@ -34,6 +39,8 @@
     "jest": "^26.6.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.40.0",
     "ts-jest": "^26.5.3",
     "typescript": "^4.2.3"
   },
