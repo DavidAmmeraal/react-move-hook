@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-      "module": "esnext",
-      "moduleResolution": "node",
-      "strict": true,
-      "isolatedModules": true,
-      "esModuleInterop": true,
-      "sourceMap": true,
-      "jsx": "react",
-      "declaration": true,
-      "declarationMap": true,
-      "target": "es6",
-      "lib": ["es6", "DOM"]
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "declaration": true,
+    "declarationMap": true,
+    "target": "es6",
+    "declarationDir": "lib/types",
+    "lib": ["es6", "DOM"]
   }
 }
