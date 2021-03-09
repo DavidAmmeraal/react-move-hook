@@ -1,4 +1,4 @@
-import { emptyBoundingRect, toBoundingRect } from "./util";
+import { emptyBoundingRect } from "./util";
 
 describe("emptyBoundingRect", () => {
   it("returns an empty bounding rect", () => {
