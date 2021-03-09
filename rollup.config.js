@@ -10,7 +10,7 @@ const typescriptPlugin = () =>
 
 export default [
   {
-    input: [resolve("src/index.ts"), resolve("src/connector.ts")],
+    input: [resolve("src/index.ts")],
     output: {
       dir: resolve("lib"),
       format: "cjs",
@@ -20,7 +20,7 @@ export default [
     plugins: [typescriptPlugin()],
   },
   {
-    input: resolve("src/index.esm.ts"),
+    input: resolve("src/index.ts"),
     output: {
       file: resolve("lib/index.esm.js"),
       format: "es",

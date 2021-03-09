@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useMovable from "react-move-hook";
+import { useMovable } from "react-move-hook";
 
 function App() {
   const [move, setMove] = useState();

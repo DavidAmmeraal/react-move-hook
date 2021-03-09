@@ -30,8 +30,9 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "yarn workspace react-move-hook test",
+    "test": "jest",
     "storybook": "yarn workspace react-move-hook storybook",
+    "prebuild": "rimraf ./packages/react-move-hook/lib",
     "build": "rollup -c rollup.config.js",
     "watch": "rollup -w -c rollup.config.js"
   },
