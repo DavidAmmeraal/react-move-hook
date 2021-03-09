@@ -1,13 +1,18 @@
 import typescript from "@rollup/plugin-typescript";
+import path from "path";
+
+const baseDir = "./packages/react-move-hook";
+
+const resolve = (dir) => path.resolve(baseDir, dir);
 
 const typescriptPlugin = () =>
-  typescript({ exclude: ["./src/stories/*", "./src/tests/*"] });
+  typescript({ exclude: [resolve("src/stories/*"), resolve("/src/tests/*")] });
 
 export default [
   {
-    input: ["src/index.ts", "src/connector.ts"],
+    input: [resolve("src/index.ts"), resolve("src/connector.ts")],
     output: {
-      dir: "lib",
+      dir: resolve("lib"),
       format: "cjs",
       exports: "auto",
     },
@@ -15,9 +20,9 @@ export default [
     plugins: [typescriptPlugin()],
   },
   {
-    input: "src/index.esm.ts",
+    input: resolve("src/index.esm.ts"),
     output: {
-      file: "lib/index.esm.js",
+      file: resolve("lib/index.esm.js"),
       format: "es",
       exports: "auto",
     },

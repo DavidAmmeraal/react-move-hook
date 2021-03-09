@@ -23,6 +23,10 @@ export interface UseMovableProps {
    */
   unbounded?: boolean;
   /**
+   * Axis
+   */
+  axis?: "x" | "y";
+  /**
    * The element which represents the size of the element being dragged around.
    */
   sizeRef?: React.RefObject<HTMLElement>;
@@ -50,7 +54,7 @@ export interface UseMovableProps {
 
 export interface MoveData {
   /**
-   * The original position from which we started moving.
+   * The original mouse position from which we started moving.
    */
   origin: Position2D;
   /**
@@ -61,6 +65,14 @@ export interface MoveData {
    * The difference in pixels from the origin of the current position.
    */
   delta: Position2D;
+  /**
+   * Delta across all moves
+   */
+  accDelta: Position2D;
+  /**
+   * The original bounding rect
+   */
+  originalRect: BoundingRect;
 }
 
 /**
@@ -125,15 +137,22 @@ type FromMoveArgs = {
    * The size of the element being moved.
    */
   elementSize: BoundingRect;
+  lastMove?: MoveData;
 };
 
-const fromMove = ({
+const getMoveData = ({
   position,
   origin,
   bounds,
   elementSize,
+  lastMove,
 }: FromMoveArgs): MoveData => {
   const delta = calcDelta(origin, position, bounds, elementSize);
+
+  const accDelta = {
+    x: (lastMove?.accDelta.x || 0) + delta.x,
+    y: (lastMove?.accDelta.y || 0) + delta.y,
+  };
 
   const rect = {
     ...elementSize,
@@ -145,6 +164,8 @@ const fromMove = ({
     rect,
     delta,
     origin,
+    originalRect: elementSize,
+    accDelta,
   };
 };
 
@@ -181,7 +202,8 @@ export const useMovable = (props: UseMovableProps) => {
    * Used by calcDelta to to make sure we don't overflow the parent element.
    */
   const originalBoundingRect = useRef<BoundingRect>();
-  const lastMove = useRef<Position2D>();
+  const lastPosition = useRef<Position2D>();
+  const lastMove = useRef<MoveData>();
 
   const {
     bounds: boundsProp,
@@ -192,6 +214,7 @@ export const useMovable = (props: UseMovableProps) => {
     onMoveStart,
     onMoveEnd,
     sizeRef,
+    axis,
   } = props;
 
   const measure = useCallback(
@@ -232,16 +255,17 @@ export const useMovable = (props: UseMovableProps) => {
   const moveStart = useCallback(
     (ev: Position2D = emptyPosition2D()) => {
       origin.current = ev;
-      lastMove.current = ev;
+      lastPosition.current = ev;
       if (ref.current) {
         originalBoundingRect.current = measure(sizeRef?.current || ref.current);
         if (onMoveStart) {
           onMoveStart(
-            fromMove({
+            getMoveData({
               origin: ev,
               position: ev,
               bounds: getBounds(),
               elementSize: originalBoundingRect.current,
+              lastMove: lastMove.current,
             })
           );
         }
@@ -253,52 +277,67 @@ export const useMovable = (props: UseMovableProps) => {
   // Called when the element is moving.
   const moveTo = useCallback(
     (position: Position2D) => {
+      const cleanPosition = {
+        x: !axis || axis === "x" ? position.x : 0,
+        y: !axis || axis === "y" ? position.y : 0,
+      };
       if (origin.current && originalBoundingRect.current) {
-        const moveData = fromMove({
-          position,
+        const moveData = getMoveData({
+          position: cleanPosition,
           origin: origin.current,
           bounds: getBounds(),
           elementSize: originalBoundingRect.current,
+          lastMove: lastMove.current,
         });
-        lastMove.current = position;
+        lastPosition.current = cleanPosition;
         if (onMove) onMove(moveData);
       }
     },
-    [getBounds, onMove]
+    [getBounds, onMove, axis]
   );
 
   const move = useCallback((movement: Partial<Position2D>) => {
-    if (origin.current && originalBoundingRect.current && lastMove.current) {
-      const base = lastMove.current;
+    if (
+      origin.current &&
+      originalBoundingRect.current &&
+      lastPosition.current
+    ) {
+      const base = lastPosition.current;
       const position = {
-        x: base.x + (movement.x || 0),
-        y: base.y + (movement.y || 0),
+        x: axis === "x" || !axis ? base.x + (movement.x || 0) : base.x,
+        y: axis === "y" || !axis ? base.y + (movement.y || 0) : base.y,
       };
-      const moveData = fromMove({
+      const moveData = getMoveData({
         position,
         origin: origin.current,
         bounds: getBounds(),
         elementSize: originalBoundingRect.current,
+        lastMove: lastMove.current,
       });
-      lastMove.current = moveData.delta;
+      lastPosition.current = moveData.delta;
       if (onMove) onMove(moveData);
     }
   }, []);
 
   // Called when the element finished moving.
   const moveEnd = useCallback(() => {
-    if (origin.current && lastMove.current && originalBoundingRect.current) {
+    if (
+      origin.current &&
+      lastPosition.current &&
+      originalBoundingRect.current
+    ) {
+      const data = getMoveData({
+        position: lastPosition.current,
+        origin: origin.current,
+        bounds: getBounds(),
+        elementSize: originalBoundingRect.current,
+        lastMove: lastMove.current,
+      });
+      lastMove.current = data;
       if (onMoveEnd) {
-        onMoveEnd(
-          fromMove({
-            position: lastMove.current,
-            origin: origin.current,
-            bounds: getBounds(),
-            elementSize: originalBoundingRect.current,
-          })
-        );
+        onMoveEnd(data);
       }
-      lastMove.current = undefined;
+      lastPosition.current = undefined;
       origin.current = undefined;
     }
   }, [getBounds, onMoveEnd]);

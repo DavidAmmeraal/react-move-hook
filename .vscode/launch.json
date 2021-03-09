@@ -8,15 +8,15 @@
       "type": "node",
       "name": "vscode-jest-tests",
       "request": "launch",
+      "runtimeArgs": ["workspace","${command:extension.yarnWorkspaceName}", "run", "test"], // ${yarnWorkspaceName} is what we're missing
       "args": [
-        "${workspaceRoot}/node_modules/.bin/jest",
-        "--runInBand"
+          "--runInBand"
       ],
-      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "yarn",   // ...along with this one,
+                                    // will run each Yarn workspace test script
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true,
-      "program": "${workspaceFolder}/node_modules/jest/bin/jest"
-    }
+  }
   ]
 }
