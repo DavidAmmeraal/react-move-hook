@@ -17,7 +17,7 @@ yarn add react-move-hook
 
 ## Usage
 
-A simple example (open in [codesandbox](https://githubbox.com/Noterik/_user_/_project_/tree/_branch_/examples/basic))
+A simple example (open in [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/basic))
 
 ```jsx
 import React, { useState } from "react";
