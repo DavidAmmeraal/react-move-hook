@@ -1,4 +1,4 @@
-import { emptyBoundingRect } from "./util";
+import { emptyBoundingRect } from "../packages/react-move-hook/src/util";
 
 describe("emptyBoundingRect", () => {
   it("returns an empty bounding rect", () => {

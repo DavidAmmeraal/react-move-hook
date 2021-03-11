@@ -41,7 +41,7 @@ export function isBoundingRect(arg: unknown): arg is BoundingRect {
   );
 }
 
-export const toBoundingRect = (input: Rect | undefined): BoundingRect => {
+export function toBoundingRect(input: Rect | undefined): BoundingRect {
   if (!input) return emptyBoundingRect();
   return {
     ...input,
@@ -52,7 +52,34 @@ export const toBoundingRect = (input: Rect | undefined): BoundingRect => {
     right: isBoundingRect(input) ? input.right : 0,
     bottom: isBoundingRect(input) ? input.bottom : 0,
   };
-};
+}
+
+export function rectDelta(a?: Rect, b?: Rect) {
+  return {
+    x: a && b ? b.left - a.left : 0,
+    y: a && b ? b.top - a.top : 0,
+  };
+}
+
+export function addPos(
+  a: Position2D = emptyPosition2D(),
+  b: Position2D = emptyPosition2D()
+) {
+  return {
+    x: a.x + b.x,
+    y: a.y + b.y,
+  };
+}
+
+export function subPos(
+  a: Position2D = emptyPosition2D(),
+  b: Position2D = emptyPosition2D()
+) {
+  return {
+    x: a.x - b.x,
+    y: a.y - b.y,
+  };
+}
 
 export type Position2D = {
   x: number;

@@ -1,0 +1,6 @@
+.movable {
+  padding: 2em;
+  border: 3px solid black;
+  box-sizing: border-box;
+  user-select: none;
+}

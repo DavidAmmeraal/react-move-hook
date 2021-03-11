@@ -1,38 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useMovable } from "react-move-hook";
 
-const containerStyle = {
-  position: "absolute",
-  margin: "10px",
-  width: "300px",
-  height: "300px",
-  backgroundColor: "lightgray",
-};
-
-const movableStyle = {
-  position: "absolute",
-  padding: "5px",
-  top: 0,
-  left: 0,
-  border: "1px solid black",
-};
+import "./App.css";
 
 function App() {
-  const [move, setMove] = useState();
+  const [state, setState] = useState({
+    moving: false,
+    position: { x: 0, y: 0 },
+    delta: undefined,
+  });
 
-  const ref = useMovable({ onMove: setMove });
+  const handleChange = useCallback((moveData) => {
+    setState((state) => ({
+      moving: moveData.moving,
+      position: moveData.stoppedMoving
+        ? {
+            ...state.position,
+            x: state.position.x + moveData.delta.x,
+            y: state.position.y + moveData.delta.y,
+          }
+        : state.position,
+      delta: moveData.moving ? moveData.delta : undefined,
+    }));
+  }, []);
+
+  const ref = useMovable({ onChange: handleChange, bounds: "parent" });
+
+  const style = {
+    backgroundColor: state.moving ? "red" : "transparent",
+    left: state.position.x,
+    top: state.position.y,
+    transform: state.delta
+      ? `translate3d(${state.delta.x}px, ${state.delta.y}px, 0)`
+      : undefined,
+  };
 
   return (
-    <div style={containerStyle}>
-      <div
-        ref={ref}
-        style={{
-          ...movableStyle,
-          transform: `translate3d(${move?.accDelta.x || 0}px, ${
-            move?.accDelta.y || 0
-          }px, 0)`,
-        }}
-      >
+    <div className="container">
+      <div ref={ref} className="movable" style={style}>
         MOVE ME
       </div>
     </div>

@@ -8,14 +8,41 @@ import React, {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Story, Meta } from "@storybook/react/types-6-0";
 
-import { MoveData, useMovable, UseMovableProps } from "../useMovable";
-import { MovableConnector, withMouse } from "../connector";
-import { emptyPosition2D, Position2D } from "../util";
+import {
+  useMovable,
+  UseMovableProps,
+} from "../packages/react-move-hook/src/useMovable";
+import {
+  MovableConnector,
+  withMouse,
+} from "../packages/react-move-hook/src/connector";
+import {
+  emptyPosition2D,
+  Position2D,
+} from "../packages/react-move-hook/src/util";
+
+import "./useMovable.stories.css";
+import { Movable } from "./components/Movable";
 
 export default {
   title: "Example/useMovable",
 } as Meta;
 
+const BasicTemplate = (props: UseMovableProps) => {
+  const [state, setState] = useState({
+    moving: false,
+    delta: undefined as Position2D | undefined,
+    position: undefined as Position2D | undefined,
+  });
+
+  return (
+    <div className="container">
+      <Movable />
+    </div>
+  );
+};
+
+/*
 interface MovableProps extends React.HTMLAttributes<HTMLDivElement> {
   delta?: Position2D;
   position?: Position2D;
@@ -210,3 +237,4 @@ export const ComposedConnector = Template.bind({});
 ComposedConnector.args = {
   connector: withKeyboard(withMouse()),
 };
+*/
