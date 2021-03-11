@@ -5,8 +5,11 @@ const baseDir = "./packages/react-move-hook";
 
 const resolve = (dir) => path.resolve(baseDir, dir);
 
-const typescriptPlugin = () =>
-  typescript({ exclude: [resolve("src/stories/*"), resolve("/src/tests/*")] });
+const typescriptPlugin = ({ ...overwrites } = {}) =>
+  typescript({
+    tsconfig: "./tsconfig.build.json",
+    ...overwrites,
+  });
 
 export default [
   {
@@ -15,9 +18,15 @@ export default [
       dir: resolve("lib"),
       format: "cjs",
       exports: "auto",
+      sourcemap: true,
     },
     external: ["react"],
-    plugins: [typescriptPlugin()],
+    plugins: [
+      typescriptPlugin({
+        declarationDir: resolve("lib/types"),
+        declaration: true,
+      }),
+    ],
   },
   {
     input: resolve("src/index.ts"),
@@ -25,8 +34,9 @@ export default [
       file: resolve("lib/index.esm.js"),
       format: "es",
       exports: "auto",
+      sourcemap: true,
     },
     external: ["react"],
-    plugins: [typescriptPlugin()],
+    plugins: [typescriptPlugin({})],
   },
 ];

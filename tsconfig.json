@@ -6,10 +6,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "declaration": true,
-    "declarationMap": true,
     "target": "es6",
-    "declarationDir": "packages/react-move-hook/lib/types",
     "lib": ["es6", "DOM"]
   }
 }
