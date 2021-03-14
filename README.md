@@ -79,8 +79,9 @@ export default App;
 
 - [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/handle) Using a handle to move an element around. 
 - [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/update-position) Using ```useState()``` to update positions. 
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard) Using the keyboard to move stuff around with a custom ```connect()``` property. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard) Using the keyboard to move stuff around with a custom ```connect()``` option. 
 - [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/multiple) Making multiple elements movable (try moving them around at the same time on your mobile device).
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/x-axis) Restricting movement through the ```bounds``` and ```axis``` options.
 
 
 ### Options
@@ -154,7 +155,7 @@ interface UseMovableOptions {
 
 ## Using events
 
-You can use the ```onMoveStart```, ```onMove```, ```onMoveEnd```, ```onChange``` properties
+You can use the ```onMoveStart```, ```onMove```, ```onMoveEnd```, ```onChange``` options
 to listen for position changes of the element being dragged. These functions will all take a 
 MoveEvent object whenever they're called.
 
@@ -217,7 +218,7 @@ If you want to restrict movement on an axis (for example, only horizontal moveme
 
 ## Customising behaviour
 
-For a working example check [codesandbox]("https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard").
+For a working example check [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard).
 
 By default useMovable will listen to touch and mouse events.
 
