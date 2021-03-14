@@ -1,6 +1,6 @@
 {
   "name": "example-keyboard",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
@@ -9,7 +9,7 @@
     "ramda": "^0.27.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-move-hook": "^0.1.0-alpha.1",
+    "react-move-hook": "^0.1.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
