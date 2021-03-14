@@ -1,4 +1,6 @@
 import typescript from "@rollup/plugin-typescript";
+import copy from "rollup-plugin-copy";
+
 import path from "path";
 
 const baseDir = "./packages/react-move-hook";
@@ -37,6 +39,14 @@ export default [
       sourcemap: true,
     },
     external: ["react"],
-    plugins: [typescriptPlugin({})],
+    plugins: [
+      typescriptPlugin({}),
+      copy({
+        targets: [
+          { src: "./README.md", dest: resolve("./") },
+          { src: "./LICENSE.md", dest: resolve("./") },
+        ],
+      }),
+    ],
   },
 ];
