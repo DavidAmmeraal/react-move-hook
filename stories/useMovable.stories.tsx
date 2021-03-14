@@ -12,7 +12,6 @@ import { Movable, MovableProps } from "./components/Movable";
 import { compose } from "ramda";
 
 import "./useMovable.stories.css";
-import { Test } from "./Test";
 
 export default {
   title: "useMovable",
