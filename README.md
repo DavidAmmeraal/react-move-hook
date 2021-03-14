@@ -77,10 +77,10 @@ export default App;
 
 ### More examples
 
-- [codesandbox]("https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/handle") Using a handle to move an element around. 
-- [codesandbox]("https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/update-position") Using ```useState()``` to update positions. 
-- [codesandbox]("https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard") Using the keyboard to move stuff around with a custom ```connect()``` property. 
-- [codesandbox]("https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/multiple") Making multiple elements movable (try moving them around at the same time on your mobile device).
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/handle) Using a handle to move an element around. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/update-position) Using ```useState()``` to update positions. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard) Using the keyboard to move stuff around with a custom ```connect()``` property. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/multiple) Making multiple elements movable (try moving them around at the same time on your mobile device).
 
 
 ### Options
@@ -311,66 +311,4 @@ This function can now be passed into the ```connect``` option like:
 
 ```typescript
 const ref = useMovable({ connect: withMouseAndKeyboard });
-```
-
-##### - onMove:
-```(data: MoveEvent) => void;```
-
-Called when moving. Takes a [MoveEvent](MoveEvent) object.
-
-##### - onMoveEnd:
-```(data: MoveEvent) => void;```
-
-Called when moving ended. Takes a [MoveEvent](MoveEvent) object.
-
-##### - onChange:
-```(data: MoveEvent) => void;```
-
-Called when any of the above callbacks are called. Takes [MoveEvent](MoveEvent) object.
-
-##### - connect
-```MovableConnect```
-
-A function connects the hook to the referenced HTML element. See [MovableConnect](MovableConnect) for more information. 
-
-##### - measure
-``` (el: HTMLElement) => BoundingRect```;
-
-A function that returns a DOMRect for a given element. Usually you shouldn't have to use this. 
-
-### MoveEvent
-
-An object containing the current state of the movement of the following shape:
-
-```typescript
-type MoveEvent {
-   /**
-   * The origin from where we started moving
-   */
-  origin?: Position2D;
-  /**
-   * The position of the current movement
-   */
-  position?: Position2D;
-  /**
-   * The (bounded) difference from the origin to the current position
-   */
-  delta: Position2D;
-  /**
-   * The size and the position of the element when we started moving
-   */
-  originRect?: BoundingRect;
-  /**
-   * Set to `true` when movement started
-   */
-  startedMoving: boolean;
-  /**
-   * Set to `true` when movement stopped
-   */
-  stoppedMoving: boolean;
-  /**
-   * Set to `true` when moving
-   */
-  moving: boolean;
-}
 ```
