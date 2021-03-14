@@ -6,11 +6,11 @@ import {
 
 import "./Movable.css";
 
-interface MovableProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MovableProps extends React.HTMLAttributes<HTMLDivElement> {
   delta?: Position2D;
   position?: Position2D;
 }
-
+// eslint-disable-next-line react/display-name
 export const Movable = React.forwardRef<HTMLDivElement, MovableProps>(
   (
     { delta, position = emptyPosition2D(), style, className, ...props },

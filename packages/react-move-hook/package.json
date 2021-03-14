@@ -5,9 +5,6 @@
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "types": "lib/types",
-  "scripts": {
-    "storybook": "start-storybook -p 6006"
-  },
   "author": "David Ammeraal",
   "license": "MIT",
   "peerDependencies": {

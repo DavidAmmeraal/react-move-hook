@@ -1,6 +1,9 @@
 .movable {
+  position: absolute;
   padding: 2em;
   border: 3px solid black;
+  white-space: nowrap;
   box-sizing: border-box;
   user-select: none;
+  display: inline;
 }
