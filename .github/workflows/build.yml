@@ -21,7 +21,7 @@ jobs:
       - run: yarn install
         name: Install Dependencies
 
-      - run: yarn test
+      - run: yarn test --coverage
         name: Execute Tests
       
       - name: Publish coverage to codecov.io
