@@ -19,6 +19,10 @@ function App() {
     document.body.classList.toggle("moving", state.moving);
   }, [state.moving]);
 
+  useEffect(() => {
+    document.getElementById("movable").focus();
+  }, []);
+
   const handleChange = useCallback((moveData) => {
     setState((state) => ({
       moving: moveData.moving,
@@ -45,11 +49,23 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div ref={ref} className="movable" style={style} tabIndex={0}>
-        MOVE ME
+    <>
+      <p>
+        When the element is focussed, it can be moved around using the arrow
+        keys.
+      </p>
+      <div className="container">
+        <div
+          ref={ref}
+          id="movable"
+          className="movable"
+          style={style}
+          tabIndex={0}
+        >
+          MOVE ME
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
