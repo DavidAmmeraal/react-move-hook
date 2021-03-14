@@ -1,0 +1,13 @@
+{
+  "name": "react-move-hook",
+  "version": "0.1.0-alpha.1",
+  "description": "A React hook to make elements movable.",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/types",
+  "author": "David Ammeraal",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=16.8"
+  }
+}
