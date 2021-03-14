@@ -26,7 +26,7 @@ yarn add react-move-hook
 ## Usage
 
 <details>
-  <summary>A simple example (open in <a href="https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/basic">codesandbox</a>)
+  <summary>A simple example (open in <a href="https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/basic">codesandbox</a>)
 </summary>
 
 ```jsx
@@ -77,11 +77,11 @@ export default App;
 
 ### More examples
 
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/handle) Using a handle to move an element around. 
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/update-position) Using ```useState()``` to update positions. 
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard) Using the keyboard to move stuff around with a custom ```connect()``` option. 
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/multiple) Making multiple elements movable (try moving them around at the same time on your mobile device).
-- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/x-axis) Restricting movement through the ```bounds``` and ```axis``` options.
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/handle) Using a handle to move an element around. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/update-position) Using ```useState()``` to update positions. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/keyboard) Using the keyboard to move stuff around with a custom ```connect()``` option. 
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/multiple) Making multiple elements movable (try moving them around at the same time on your mobile device).
+- [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/x-axis) Restricting movement through the ```bounds``` and ```axis``` options.
 
 
 ### Options
@@ -218,7 +218,7 @@ If you want to restrict movement on an axis (for example, only horizontal moveme
 
 ## Customising behaviour
 
-For a working example check [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/keyboard).
+For a working example check [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/keyboard).
 
 By default useMovable will listen to touch and mouse events.
 
