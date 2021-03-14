@@ -1,3 +1,8 @@
+![npm](https://img.shields.io/npm/v/react-move-hook)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+[![Actions Status](https://github.com/DavidAmmeraal/react-move-hook/workflows/Build/badge.svg)](https://github.com/DavidAmmeraal/react-move-hook/actions)
+[![codecov](https://codecov.io/gh/DavidAmmeraal/react-move-hook/branch/main/graph/badge.svg?token=TH02P0LR1Z)](https://codecov.io/gh/DavidAmmeraal/react-move-hook)
+
 # react-move-hook
 
 A unopinionated customisable react hook without dependencies (except for React) to move stuff around. This library keeps track of an element being moved around.
