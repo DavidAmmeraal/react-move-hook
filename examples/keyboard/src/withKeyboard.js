@@ -1,6 +1,6 @@
-import { connect } from "react-move-hook";
+import { createConnect } from "react-move-hook";
 
-export const withKeyboard = connect(({ actions, el }) => {
+export const withKeyboard = createConnect(({ actions, el }) => {
   const moveListener = (e) => {
     if (document.activeElement !== el) return;
     e.preventDefault();

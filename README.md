@@ -262,7 +262,7 @@ If you want to create your own connect function you can use the ```createConnect
 to keyboard events you could use the following code.
 
 ```typescript
-import { createConnect } from "../packages/react-move-hook/src/connect";
+import { createConnect } from "react-move-hook";
 
 export const withKeyboard = createConnect(({ actions, el }) => {
   const moveListener = (e) => {
