@@ -6,7 +6,7 @@ import { Basic, WithState } from "../stories/useMovable.stories";
 import { TestAdapter } from "./TestAdapter";
 import * as fixtures from "./fixtures";
 import { Position2D } from "../packages/react-move-hook/src/util";
-import { MoveEvent, UseMovableProps } from "../packages/react-move-hook/src";
+import { MoveEvent, UseMovableOptions } from "../packages/react-move-hook/src";
 
 const mockBoundingRects = () => {
   screen.getByTestId("container").getBoundingClientRect = jest.fn(
@@ -17,11 +17,11 @@ const mockBoundingRects = () => {
   );
 };
 
-const BasicTest = (props: UseMovableProps = {}) => (
+const BasicTest = (props: UseMovableOptions = {}) => (
   <Basic {...Basic.args} {...props} />
 );
 
-type Setup<T = UseMovableProps> = (args?: {
+type Setup<T = UseMovableOptions> = (args?: {
   toRender?: React.FC<T>;
   useAdapter?: boolean;
 }) => (

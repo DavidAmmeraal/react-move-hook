@@ -4,7 +4,7 @@ import { Story } from "@storybook/react/types-6-0";
 import { Position2D } from "../packages/react-move-hook/src/util";
 import {
   useMovable,
-  UseMovableProps,
+  UseMovableOptions,
   withMouse,
   withTouch,
 } from "../packages/react-move-hook/src";
@@ -12,23 +12,14 @@ import { Movable, MovableProps } from "./components/Movable";
 import { compose } from "ramda";
 
 import "./useMovable.stories.css";
+import { Test } from "./Test";
 
 export default {
   title: "useMovable",
   component: useMovable,
-  argTypes: {
-    onMoveStart: { action: "onMoveStart" },
-    onMoveEnd: { action: "onMoveEnd" },
-    onMove: { action: "onMove" },
-    onChange: { action: "onChange" },
-    description: {
-      disable: true,
-      control: false,
-    },
-  },
 };
 
-type UseMovableStoryArgs = UseMovableProps & {
+type UseMovableStoryArgs = UseMovableOptions & {
   movable?: MovableProps & { moving: boolean };
   description?: JSX.Element;
 };
@@ -86,14 +77,7 @@ const WithStateTemplate: Story<UseMovableStoryArgs> = (args) => {
 };
 
 export const Basic = Template.bind({});
-Basic.args = {
-  description: (
-    <p>
-      A basic example, the movable wont move but events will be visible
-      &quot;actions&quot; tab.
-    </p>
-  ),
-};
+Basic.args = {};
 
 export const WithState = WithStateTemplate.bind({});
 WithState.args = {};

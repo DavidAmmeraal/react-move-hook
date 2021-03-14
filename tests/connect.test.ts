@@ -1,5 +1,5 @@
 import {
-  connect,
+  createConnect,
   MovableActions,
   MovableConnect,
 } from "../packages/react-move-hook/src";
@@ -9,7 +9,7 @@ describe("connect", () => {
     const setup = () => {
       const cleanUp = jest.fn();
       const connectFn: MovableConnect = jest.fn(() => cleanUp);
-      const conn = connect(connectFn);
+      const conn = createConnect(connectFn);
       const actions = {} as MovableActions;
       const el = document.createElement("div");
 
@@ -34,7 +34,7 @@ describe("connect", () => {
 
       const otherCleanUp = jest.fn();
       const otherConnectFn: MovableConnect = jest.fn(() => otherCleanUp);
-      const otherConn = connect(otherConnectFn);
+      const otherConn = createConnect(otherConnectFn);
       const composedConn = conn(otherConn());
       const disconnect = composedConn({ actions, el });
       expect(connectFn).toHaveBeenLastCalledWith({ actions, el });
