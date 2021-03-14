@@ -44,7 +44,8 @@
     "storybook": "start-storybook -p 6006",
     "prebuild": "rimraf ./packages/react-move-hook/lib",
     "build": "rollup -c rollup.config.js",
-    "watch": "rollup -w -c rollup.config.js"
+    "watch": "rollup -w -c rollup.config.js",
+    "ci": "yarn install --frozen-lockfile"
   },
   "repository": {
     "type": "git",
