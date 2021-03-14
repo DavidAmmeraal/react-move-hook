@@ -54,39 +54,12 @@ export function toBoundingRect(input: Rect | undefined): BoundingRect {
   };
 }
 
-export function rectDelta(a?: Rect, b?: Rect) {
-  return {
-    x: a && b ? b.left - a.left : 0,
-    y: a && b ? b.top - a.top : 0,
-  };
-}
-
-export function addPos(
-  a: Position2D = emptyPosition2D(),
-  b: Position2D = emptyPosition2D()
-) {
-  return {
-    x: a.x + b.x,
-    y: a.y + b.y,
-  };
-}
-
-export function subPos(
-  a: Position2D = emptyPosition2D(),
-  b: Position2D = emptyPosition2D()
-) {
-  return {
-    x: a.x - b.x,
-    y: a.y - b.y,
-  };
-}
-
 export type Position2D = {
-  x: number;
-  y: number;
+  readonly x: number;
+  readonly y: number;
 };
 
-export const emptyPosition2D = () => ({
+export const emptyPosition2D = (): Position2D => ({
   x: 0,
   y: 0,
 });

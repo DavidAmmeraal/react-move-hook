@@ -20,39 +20,41 @@ yarn add react-move-hook
 A simple example (open in [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/develop/examples/basic))
 
 ```jsx
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useMovable } from "react-move-hook";
 
-const containerStyle = {
-  position: "absolute",
-  margin: "10px",
-  width: "300px",
-  height: "300px",
-  backgroundColor: "lightgray",
-};
-
-const movableStyle = {
-  position: "absolute",
-  padding: "5px",
-  top: 0,
-  left: 0,
-  border: "1px solid black",
-};
+import "./App.css";
 
 function App() {
-  const [move, setMove] = useState();
+  const [state, setState] = useState({
+    moving: false,
+    delta: undefined,
+  });
 
-  const ref = useMovable({ onMove: setMove });
+  useEffect(() => {
+    // Adding a class with overflow: hidden to body, so screen doesn't move while using touch input
+    document.body.classList.toggle("moving", state.moving);
+  }, [state.moving]);
+
+  const handleChange = useCallback((moveData) => {
+    setState({
+      ...moveData,
+      delta: moveData.moving ? moveData.delta : undefined,
+    });
+  }, []);
+
+  const ref = useMovable({ onChange: handleChange, bounds: "parent" });
+
+  const style = {
+    backgroundColor: state.moving ? "red" : "transparent",
+    transform: state.delta
+      ? `translate3d(${state.delta.x}px, ${state.delta.y}px, 0)`
+      : undefined,
+  };
 
   return (
-    <div style={containerStyle}>
-      <div
-        ref={ref}
-        style={{
-          ...movableStyle,
-          transform: `translate3d(${move?.accDelta.x || 0}px, ${move?.accDelta.y || 0}px, 0)`,
-        }}
-      >
+    <div className="container">
+      <div ref={ref} className="movable" style={style}>
         MOVE ME
       </div>
     </div>

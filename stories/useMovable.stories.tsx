@@ -1,240 +1,118 @@
-import React, {
-  CSSProperties,
-  useCallback,
-  useContext,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useState } from "react";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Story, Meta } from "@storybook/react/types-6-0";
-
+import { Story } from "@storybook/react/types-6-0";
+import { Position2D } from "../packages/react-move-hook/src/util";
 import {
   useMovable,
   UseMovableProps,
-} from "../packages/react-move-hook/src/useMovable";
-import {
-  MovableConnector,
   withMouse,
-} from "../packages/react-move-hook/src/connector";
-import {
-  emptyPosition2D,
-  Position2D,
-} from "../packages/react-move-hook/src/util";
+  withTouch,
+} from "../packages/react-move-hook/src";
+import { Movable, MovableProps } from "./components/Movable";
+import { compose } from "ramda";
 
 import "./useMovable.stories.css";
-import { Movable } from "./components/Movable";
 
 export default {
-  title: "Example/useMovable",
-} as Meta;
-
-const BasicTemplate = (props: UseMovableProps) => {
-  const [state, setState] = useState({
-    moving: false,
-    delta: undefined as Position2D | undefined,
-    position: undefined as Position2D | undefined,
-  });
-
-  return (
-    <div className="container">
-      <Movable />
-    </div>
-  );
-};
-
-/*
-interface MovableProps extends React.HTMLAttributes<HTMLDivElement> {
-  delta?: Position2D;
-  position?: Position2D;
-}
-
-const StoryContext = React.createContext({
-  boundsRef: undefined as React.RefObject<HTMLElement> | undefined,
-});
-
-const Movable = React.forwardRef<HTMLDivElement, MovableProps>(
-  ({ delta, position = emptyPosition2D(), style, ...props }, ref) => {
-    const styleProp: CSSProperties = {
-      ...style,
-      position: "absolute",
-      left: position.x,
-      top: position.y,
-      padding: "2em",
-      border: "3px solid black",
-      boxSizing: "border-box",
-      userSelect: "none",
-      ...(delta
-        ? { transform: `translate3d(${delta.x}px, ${delta.y}px, 0)` }
-        : {}),
-    };
-    return <div {...props} style={styleProp} ref={ref} />;
-  }
-);
-
-const MovableHandle = React.forwardRef<HTMLDivElement, MovableProps>(
-  ({ delta, style, ...rest }, ref) => {
-    const styleProp: CSSProperties = {
-      ...style,
-      position: "absolute",
-      backgroundColor: "red",
-      borderRadius: "50%",
-      width: "1em",
-      height: "1em",
-      top: ".5em",
-      left: ".5em",
-    };
-    return <div {...rest} style={styleProp} ref={ref} />;
-  }
-);
-
-interface MovableStoryTemplateArgs extends UseMovableProps {
-  withHandle?: boolean;
-}
-
-const Template: Story<MovableStoryTemplateArgs> = (args) => {
-  const { withHandle, bounds } = args;
-  const { boundsRef } = useContext(StoryContext);
-
-  const sizeRef = useRef<HTMLDivElement>(null);
-  const [state, setState] = useState({
-    moving: false,
-    delta: undefined as Position2D | undefined,
-    position: undefined as Position2D | undefined,
-  });
-
-  const handleMoveStart = useCallback(() => {
-    setState((s) => ({ ...s, moving: true }));
-  }, []);
-
-  const handleEndMoveEnd = useCallback((e: MoveData) => {
-    setState((s) => {
-      const pos = s.position || emptyPosition2D();
-      const newPosition = { x: pos.x + e.delta.x, y: pos.y + e.delta.y };
-      return {
-        ...s,
-        moving: false,
-        position: newPosition,
-        delta: undefined,
-      };
-    });
-  }, []);
-
-  const handleMove = useCallback((e: MoveData) => {
-    setState((s) => ({ ...s, delta: e.delta }));
-  }, []);
-
-  const ref = useMovable({
-    ...args,
-    bounds: boundsRef || bounds,
-    onMoveStart: handleMoveStart,
-    onMove: handleMove,
-    sizeRef,
-    onMoveEnd: handleEndMoveEnd,
-  });
-
-  return (
-    <div
-      data-testid="parent"
-      style={{
-        position: "relative",
-        marginTop: 10,
-        marginLeft: 10,
-        width: 300,
-        height: 300,
-        backgroundColor: "lightgrey",
-      }}
-    >
-      <Movable
-        ref={withHandle ? sizeRef : ref}
-        delta={state.delta}
-        position={state.position}
-        tabIndex={0}
-        data-testid="movable"
-        data-moving={state.moving}
-      >
-        {withHandle && <MovableHandle ref={ref} data-testid="handle" />}
-        Drag me
-      </Movable>
-    </div>
-  );
-};
-
-export const Default = Template.bind({});
-export const Unbounded = Template.bind({});
-Unbounded.args = {
-  unbounded: true,
-};
-export const Bounded = Template.bind({});
-Bounded.decorators = [
-  (RenderedStory) => {
-    const ref = useRef<HTMLDivElement>(null);
-    return (
-      <StoryContext.Provider value={{ boundsRef: ref }}>
-        <div
-          ref={ref}
-          style={{
-            padding: "3em",
-            display: "inline-block",
-            backgroundColor: "darkgrey",
-          }}
-        >
-          <RenderedStory />
-        </div>
-      </StoryContext.Provider>
-    );
+  title: "useMovable",
+  component: useMovable,
+  argTypes: {
+    onMoveStart: { action: "onMoveStart" },
+    onMoveEnd: { action: "onMoveEnd" },
+    onMove: { action: "onMove" },
+    onChange: { action: "onChange" },
+    description: {
+      disable: true,
+      control: false,
+    },
   },
-];
+};
 
-export const WithHandle = Template.bind({});
+type UseMovableStoryArgs = UseMovableProps & {
+  movable?: MovableProps & { moving: boolean };
+  description?: JSX.Element;
+};
+
+const Template: Story<UseMovableStoryArgs> = (args) => {
+  const { sizeRef, description } = args;
+
+  // Making props undefined if args is empty to get test coverage over default UseMovableProps.
+  const useMovableProps = Object.keys(args).length === 0 ? undefined : args;
+
+  const ref = useMovable(useMovableProps);
+
+  return (
+    <div className="main">
+      <div data-testid="container" className="container">
+        <Movable
+          ref={sizeRef ? (sizeRef as React.RefObject<HTMLDivElement>) : ref}
+          {...args.movable}
+          // These props are added for testing purposes
+          data-testmoving={`${!!args.movable?.moving}`}
+          data-testid="movable"
+          tabIndex={0}
+        >
+          {sizeRef && <div data-testid="handle" className="handle" ref={ref} />}
+          Move me
+        </Movable>
+      </div>
+      {description}
+    </div>
+  );
+};
+
+const WithStateTemplate: Story<UseMovableStoryArgs> = (args) => {
+  const [state, setState] = useState({
+    moving: false,
+    delta: undefined as Position2D | undefined,
+    position: { x: 0, y: 0 } as Position2D,
+  });
+
+  const handleChange = useCallback((moveData) => {
+    setState((state) => ({
+      moving: moveData.moving,
+      position: moveData.stoppedMoving
+        ? {
+            ...state.position,
+            x: state.position.x + moveData.delta.x,
+            y: state.position.y + moveData.delta.y,
+          }
+        : state.position,
+      delta: moveData.moving ? moveData.delta : undefined,
+    }));
+  }, []);
+
+  return <Template {...args} onChange={handleChange} movable={state} />;
+};
+
+export const Basic = Template.bind({});
+Basic.args = {
+  description: (
+    <p>
+      A basic example, the movable wont move but events will be visible
+      &quot;actions&quot; tab.
+    </p>
+  ),
+};
+
+export const WithState = WithStateTemplate.bind({});
+WithState.args = {};
+
+export const BoundedByParent = WithStateTemplate.bind({});
+BoundedByParent.args = {
+  bounds: "parent",
+};
+
+export const WithHandle = WithStateTemplate.bind({});
 WithHandle.args = {
-  withHandle: true,
+  sizeRef: { current: null },
+  bounds: "parent",
 };
 
-const withKeyboard = (connector?: MovableConnector): MovableConnector => {
-  const listeners = {} as { [key: string]: (...args: any) => void };
+const connect = compose(withMouse, withTouch)();
 
-  return {
-    connect: (el, actions) => {
-      connector?.connect(el, actions);
-      listeners.move = (e: KeyboardEvent) => {
-        if (document.activeElement !== el) return;
-        e.preventDefault();
-        actions.moveStart();
-        switch (e.key) {
-          case "ArrowUp":
-            actions.move({ y: -10 });
-            break;
-          case "ArrowRight":
-            actions.move({ x: 10 });
-            break;
-          case "ArrowDown":
-            actions.move({ y: 10 });
-            break;
-          case "ArrowLeft":
-            actions.move({ x: -10 });
-            break;
-          default:
-        }
-        actions.moveEnd();
-      };
-      window.addEventListener("keydown", listeners.move);
-    },
-    disconnect: (el) => {
-      connector?.disconnect(el);
-      el.addEventListener("focus", listeners.moveStart);
-      window.addEventListener("keydown", listeners.move);
-      el.addEventListener("blur", listeners.moveEnd);
-    },
-  };
+export const WithKeyboard = WithStateTemplate.bind({});
+WithKeyboard.args = {
+  connect,
+  bounds: "parent",
 };
-
-export const CustomConnector = Template.bind({});
-CustomConnector.args = {
-  connector: withKeyboard(),
-};
-
-export const ComposedConnector = Template.bind({});
-ComposedConnector.args = {
-  connector: withKeyboard(withMouse()),
-};
-*/
