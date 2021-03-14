@@ -5,13 +5,13 @@
 
 # react-move-hook
 
-A unopinionated customisable react hook without dependencies (except for React) to move stuff around. This library keeps track of an element being moved around.
+A unopinionated customizable react hook without dependencies (except for React) to move stuff around. This library keeps track of an element being moved around.
 
 ## Description
 
 This hook is created to track movements on an HTMLElement, it will **not** add any CSS properties on the element on its own accord. This is done on purpose, so a developer has control over what styles are actually being used (such as css transforms or top/left positioning).
 
-By default this hook will bind listeners to mouse and touch events, but the hook can also be [configured](#connectors) to use different methods to move an element around (such as keyboard events). 
+By default this hook will bind listeners to mouse and touch events, but the hook can also be [configured](#customising-behaviour) to use different methods to move an element around (such as keyboard events). 
 
 By default, ```useMovable``` will use [getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect) to do measurements on HTML elements.
 
@@ -221,7 +221,7 @@ The event handlers will now only receive events with a ```delta``` that is withi
 
 If you want to restrict movement on an axis (for example, only horizontal movement). You can use the "axis" option. The option can be set to either "x" or "y". If set to "x", you will receive events only containing a delta on the "x" values.
 
-## Customising behaviour
+## Customizing behaviour
 
 For a working example check [codesandbox](https://githubbox.com/DavidAmmeraal/react-move-hook/tree/main/examples/keyboard).
 
