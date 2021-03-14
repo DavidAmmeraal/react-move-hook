@@ -31,7 +31,7 @@ yarn add react-move-hook
 ## Usage
 
 <details>
-  <summary>A simple example (open in <a href="https://githubbox.com/DavidAmmeraal/react-move-hook/tree/master/examples/basic">codesandbox</a>)
+  <summary>A simple example (open in <a href="https://githubbox.com/DavidAmmeraal/react-move-hook/tree/main/examples/basic">codesandbox</a>)
 </summary>
 
 ```jsx
