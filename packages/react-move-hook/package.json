@@ -2,12 +2,21 @@
   "name": "react-move-hook",
   "version": "0.1.1",
   "description": "A React hook to make elements movable.",
+  "keywords": ["react", "hooks", "move", "drag and drop", "movable"],
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "types": "lib/types",
-  "author": "David Ammeraal",
+  "author": "David Ammeraal <david.ammeraal@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": ">=16.8"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DavidAmmeraal/react-move-hook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DavidAmmeraal/react-move-hook/issues"
+  },
+  "homepage": "https://github.com/DavidAmmeraal/react-move-hook#readme"
 }
