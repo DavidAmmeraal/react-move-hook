@@ -11,12 +11,33 @@ import {
 } from "./util";
 
 export interface MoveState {
+  /**
+   * The origin from where we started moving
+   */
   origin?: Position2D;
+  /**
+   * The position of the current movement
+   */
   position?: Position2D;
+  /**
+   * The (bounded) difference from the origin to the current position
+   */
   delta: Position2D;
+  /**
+   * The size and the position of the element when we started moving
+   */
   originRect?: BoundingRect;
+  /**
+   * Set to `true` when movement started
+   */
   startedMoving: boolean;
+  /**
+   * Set to `true` when movement stopped
+   */
   stoppedMoving: boolean;
+  /**
+   * Set to `true` when moving
+   */
   moving: boolean;
 }
 
@@ -37,45 +58,67 @@ const initialState: MoveState = Object.freeze({
   stoppedMoving: false,
 });
 
-export interface UseMovableProps {
+export interface UseMovableOptions {
   /**
-   * Boundary in which the element can be dragged
+   * The boundary in which the element can be moved.
+   *
+   * When not set, the element can be moved around freely.
+   *
+   * When set to ```"parent"```, will use parent element of referenced
+   * element or the parent of the given sizeRef element.
+   *
+   * Can also be given a DOMRect, a function returning a DOMRect or a reference to
+   * another HTMLElement.
    */
   bounds?:
     | "parent"
-    | (() => BoundingRect | undefined)
-    | BoundingRect
+    | (() => DOMRect | undefined)
+    | DOMRect
     | React.RefObject<HTMLElement | undefined>;
+
   /**
-   * Axis
+   * Restricts the axis on which moves can be made.
+   * ```"x"``` is the horizontal axis, ```"y"``` is the vertical axis.
    */
   axis?: "x" | "y";
+
   /**
-   * The element which represents the size of the element being dragged around.
+   * The element that defines the size of "what" is being moved around.
+   *
+   * This is used when you are moving an element, but are initiating movements
+   * through another element (usually a handle of some sorts within the element
+   * being moved around.
    */
   sizeRef?: React.RefObject<HTMLElement>;
+
   /**
-   * Called when the element is being moved
+   * Called when moving starts.
    */
   onMove?: (data: MoveEvent) => void;
+
   /**
    * Called when the elements starts moving
    */
   onMoveStart?: (data: MoveEvent) => void;
+
   /**
    * Called when element stops moving
    */
   onMoveEnd?: (data: MoveEvent) => void;
+
   /**
    * Function that is called on move-start, move and move-end
    */
-  onChange?: (date: MoveState) => void;
+  onChange?: (date: MoveEvent) => void;
+
   /**
-   * Connector that connects hook to DOM or something else.
+   * A function connects the hook to the referenced HTML element. See
+   * MovableConnect for more information.
    */
   connect?: MovableConnect;
+
   /**
-   * Measuring method, defaults to get [getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
+   * Measuring method, defaults to getBoundingClientRect
    */
   measure?: (el: HTMLElement) => BoundingRect;
 }
@@ -126,9 +169,6 @@ const defaultMeasure = (e?: HTMLElement) => {
   return e?.getBoundingClientRect();
 };
 
-/**
- * Supports mouse/touch events out of the box
- */
 type StateMutator = (state: MoveState) => void;
 
 /**
@@ -139,7 +179,7 @@ type StateMutator = (state: MoveState) => void;
  * @param props Props of the hook.
  */
 export const useMovable = (
-  props: UseMovableProps = {}
+  options: UseMovableOptions = {}
 ): ((node: HTMLElement | null) => void) => {
   const {
     bounds: boundsProp,
@@ -151,7 +191,7 @@ export const useMovable = (
     onMoveEnd,
     sizeRef,
     axis,
-  } = props;
+  } = options;
 
   /**
    * Reference to the element we're moving.
@@ -219,7 +259,7 @@ export const useMovable = (
       });
 
       if (onMoveStart) onMoveStart(getState() as MoveEvent);
-      if (onChange) onChange(getState());
+      if (onChange) onChange(getState() as MoveEvent);
     },
     [getState, measure, onChange, onMoveStart, setState, sizeRef]
   );
@@ -248,7 +288,7 @@ export const useMovable = (
       });
 
       if (onMove) onMove(getState() as MoveEvent);
-      if (onChange) onChange(getState());
+      if (onChange) onChange(getState() as MoveEvent);
     },
     [getState, axis, setState, onMove, onChange, getBounds]
   );
@@ -274,7 +314,7 @@ export const useMovable = (
       });
 
       if (onMove) onMove(getState() as MoveEvent);
-      if (onChange) onChange(getState());
+      if (onChange) onChange(getState() as MoveEvent);
     },
     [getState, axis, setState, onMove, onChange, getBounds]
   );
@@ -289,7 +329,7 @@ export const useMovable = (
     });
 
     if (onMoveEnd) onMoveEnd(getState() as MoveEvent);
-    if (onChange) onChange(getState());
+    if (onChange) onChange(getState() as MoveEvent);
   }, [getState, onChange, onMoveEnd, setState]);
 
   const doDisconnect = useCallback(() => {

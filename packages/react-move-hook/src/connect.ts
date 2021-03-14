@@ -15,7 +15,7 @@ export type MovableActions = {
   moveEnd: () => void;
 };
 
-export const connect = (a: MovableConnect) => (
+export const createConnect = (a: MovableConnect) => (
   b?: MovableConnect
 ): MovableConnect => {
   const c: MovableConnect = (...args) => {
@@ -32,7 +32,7 @@ export const connect = (a: MovableConnect) => (
   return c;
 };
 
-export const withTouch = connect(({ actions, el }) => {
+export const withTouch = createConnect(({ actions, el }) => {
   const moveStartListener = (e: TouchEvent) => {
     e.preventDefault();
     actions.moveStart(eventPosition(e));
@@ -55,7 +55,7 @@ export const withTouch = connect(({ actions, el }) => {
   };
 });
 
-export const withMouse = connect(({ actions, el }) => {
+export const withMouse = createConnect(({ actions, el }) => {
   const moveStartListener = (e: InputEvent) => {
     actions.moveStart(eventPosition(e));
   };
