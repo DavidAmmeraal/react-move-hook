@@ -2,7 +2,7 @@ import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { Basic, WithState } from "../stories/useMovable.stories";
+import { Basic } from "../stories/useMovable.stories";
 import { TestAdapter } from "./TestAdapter";
 import * as fixtures from "./fixtures";
 import { Position2D } from "../packages/react-move-hook/src/util";
