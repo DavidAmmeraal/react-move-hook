@@ -15,22 +15,22 @@ export type MovableActions = {
   moveEnd: () => void;
 };
 
-export const createConnect = (a: MovableConnect) => (
-  b?: MovableConnect
-): MovableConnect => {
-  const c: MovableConnect = (...args) => {
-    if (!b) return a(...args);
-    const cleanupA = a(...args);
-    const cleanupB = b(...args);
+export const createConnect =
+  (a: MovableConnect) =>
+  (b?: MovableConnect): MovableConnect => {
+    const c: MovableConnect = (...args) => {
+      if (!b) return a(...args);
+      const cleanupA = a(...args);
+      const cleanupB = b(...args);
 
-    return () => {
-      cleanupA();
-      cleanupB();
+      return () => {
+        cleanupA();
+        cleanupB();
+      };
     };
-  };
 
-  return c;
-};
+    return c;
+  };
 
 export const withTouch = createConnect(({ actions, el }) => {
   const moveStartListener = (e: TouchEvent) => {
