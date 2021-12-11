@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { defaultConnect, MovableConnect } from "./connect";
 import useMovableActions, { MoveEvent } from "./useMovableActions";
 import { isBoundingRect } from "./util";
@@ -68,12 +68,18 @@ export const useMovable = (options: UseMovableOptions = {}): UseMovableValue => 
 		}
 	}, []);
 
-	const measureBounds = useCallback(() => {
-		if (bounds === "parent" && movingRef.current) {
-			return movingRef.current.parentElement?.getBoundingClientRect()
+  const measureBounds = useCallback(() => {
+    if (isBoundingRect(bounds)) return bounds;
+
+    if (bounds === "parent") {
+      if (typeof sizeRef === "object" && (sizeRef as React.RefObject<HTMLElement>).current) {
+        return (sizeRef as React.RefObject<HTMLElement>).current?.parentElement?.getBoundingClientRect();
+      }
+      if (movingRef.current) {
+        return movingRef.current.parentElement?.getBoundingClientRect();
+      }
 		}
 
-		if (isBoundingRect(bounds)) return bounds;
 
 		if (typeof bounds === "function") {
 			const rect = bounds();
