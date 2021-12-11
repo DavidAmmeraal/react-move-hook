@@ -30,7 +30,7 @@ function App() {
     }));
   }, []);
 
-  const ref = useMovable({ onChange: handleChange });
+  const ref = useMovable({ onChange: handleChange, bounds: "parent", sizeRef });
 
   const style = {
     backgroundColor: state.moving ? "red" : "transparent",

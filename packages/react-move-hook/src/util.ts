@@ -49,8 +49,8 @@ export function toBoundingRect(input: Rect | undefined): BoundingRect {
     left: input.left,
     width: input.width,
     height: input.height,
-    right: isBoundingRect(input) ? input.right : 0,
-    bottom: isBoundingRect(input) ? input.bottom : 0,
+    right: input.left + input.width,
+    bottom: input.top + input.height,
   };
 }
 
