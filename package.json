@@ -49,7 +49,8 @@
     "prebuild": "rimraf ./packages/react-move-hook/lib",
     "build": "rollup -c rollup.config.js",
     "watch": "rollup -w -c rollup.config.js",
-    "ci": "yarn install --frozen-lockfile"
+    "ci": "yarn install --frozen-lockfile",
+    "lint": "yarn eslint packages/react-move-hook/src"
   },
   "repository": {
     "type": "git",
