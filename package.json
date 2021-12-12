@@ -42,13 +42,14 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
+    "test:ci": "jest --runInBand --coverage",
     "storybook": "start-storybook -p 6006",
     "prebuild": "rimraf ./packages/react-move-hook/lib",
     "build": "rollup -c rollup.config.js",
     "watch": "rollup -w -c rollup.config.js",
     "ci": "yarn install --frozen-lockfile",
-    "lint": "yarn eslint packages/react-move-hook/src"
+    "lint": "yarn eslint --max-warnings=0 --ext .js,.jsx,.ts,.tsx ./"
   },
   "repository": {
     "type": "git",

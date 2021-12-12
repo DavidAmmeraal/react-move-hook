@@ -2,7 +2,7 @@ import React from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
-import { Basic, WithState } from "../stories/useMovable.stories";
+import { Basic } from "../stories/useMovable.stories";
 import { TestAdapter } from "./TestAdapter";
 import * as fixtures from "./fixtures";
 import { Position2D } from "../packages/react-move-hook/src/util";
@@ -24,9 +24,7 @@ const BasicTest = (props: UseMovableOptions = {}) => (
 type Setup<T = UseMovableOptions> = (args?: {
   toRender?: React.FC<T>;
   useAdapter?: boolean;
-}) => (
-  props?: T
-) => {
+}) => (props?: T) => {
   adapter: TestAdapter;
   unmount: () => void;
 };
@@ -35,25 +33,27 @@ const doMoves = (positions: Position2D[]) => (adapter: TestAdapter) => {
   positions.forEach((pos) => adapter.actions?.moveTo(pos));
 };
 
-const setup: Setup = (setupArgs = {}) => (renderProps) => {
-  const { toRender: ToRender = BasicTest, useAdapter = true } = setupArgs;
-  const adapter = new TestAdapter();
+const setup: Setup =
+  (setupArgs = {}) =>
+  (renderProps) => {
+    const { toRender: ToRender = BasicTest, useAdapter = true } = setupArgs;
+    const adapter = new TestAdapter();
 
-  const props = useAdapter
-    ? {
-        connect: adapter.connect,
-        ...renderProps,
-      }
-    : renderProps;
+    const props = useAdapter
+      ? {
+          connect: adapter.connect,
+          ...renderProps,
+        }
+      : renderProps;
 
-  const { unmount } = render(<ToRender {...props} />);
-  mockBoundingRects();
+    const { unmount } = render(<ToRender {...props} />);
+    mockBoundingRects();
 
-  return {
-    unmount,
-    adapter,
+    return {
+      unmount,
+      adapter,
+    };
   };
-};
 
 describe("with no properties given", () => {
   it("renders", () => {

@@ -6,6 +6,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
   ],
   settings: {
     react: {
@@ -22,5 +23,7 @@ module.exports = {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
     "prettier/prettier": "error",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
   },
 };
