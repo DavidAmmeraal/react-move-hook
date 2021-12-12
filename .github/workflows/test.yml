@@ -33,7 +33,7 @@ jobs:
       - run: yarn lint
         name: Linting
 
-      - run: yarn test --coverage
+      - run: yarn test:ci
         name: Execute Tests
       
       - name: Publish coverage to codecov.io

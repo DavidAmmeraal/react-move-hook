@@ -11,14 +11,6 @@
       "url": "http://localhost:6006",
       "sourceMaps": true,
       "webRoot": "${workspaceFolder}",
-      /*
-      "sourceMapPathOverrides": {
-        "webpack:///*": "${webRoot}/*",
-        "webpack:///./*": "${webRoot}/*",
-        "webpack:///src/*": "${webRoot}/src/*",
-        "webpack:///./~/*": "${webRoot}/node_modules/*"
-      }
-      */
     },
     {
       "type": "node",
