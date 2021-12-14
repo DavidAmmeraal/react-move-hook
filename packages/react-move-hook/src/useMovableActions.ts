@@ -141,7 +141,7 @@ type StateMutator = (state: MoveState) => void;
  *
  * @param props Props of the hook.
  */
-const useMovable = (options: UseMovableActions): MovableActions => {
+const useMovableActions = (options: UseMovableActions): MovableActions => {
   const {
     measure,
     measureBounds,
@@ -261,4 +261,4 @@ const useMovable = (options: UseMovableActions): MovableActions => {
   };
 };
 
-export default useMovable;
+export default useMovableActions;
