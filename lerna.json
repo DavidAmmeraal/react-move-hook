@@ -3,6 +3,7 @@
   "useWorkspaces": true,
   "version": "0.1.2",
   "workspaces": [
+    ".",
     "examples/*",
     "packages/*"
   ]
